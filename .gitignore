@@ -14,6 +14,8 @@ dist/
 
 # Env
 .env
+.env.local
+.env.*
 
 # Uploads & logs
 backend/uploads/
