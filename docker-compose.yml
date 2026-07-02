@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: medical-ai-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - uploads:/app/uploads
+      - logs:/app/logs
+    environment:
+      - DATABASE_URL=sqlite:///./medical_ai.db
+      - SECRET_KEY=${SECRET_KEY:-change_me_in_production}
+      - ENVIRONMENT=development
+    env_file:
+      - .env
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: medical-ai-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  uploads:
+  logs:
